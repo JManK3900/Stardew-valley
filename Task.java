@@ -1,4 +1,4 @@
-public class Task implements TaskInterface, Comparable {
+public class Task implements TaskInterface, Comparable<Task> {
 
   private int priority;
   private int time;
@@ -13,6 +13,11 @@ public class Task implements TaskInterface, Comparable {
     this.simTime = simTime;
     this. prob = prob;
     this.seed = seed;
+  }
+//use this, not checkTask
+  public int compareTo(Task o)
+  {
+    return o.priority-this.priority;
   }
 
   //checks priority of tasks, what do I return/not return?
