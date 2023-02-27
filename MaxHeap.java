@@ -2,6 +2,7 @@ public class MaxHeap {
   
   protected Task[] tasks;
   protected int size;
+  
 
   public MaxHeap(){
     size = 0;
@@ -16,10 +17,29 @@ public class MaxHeap {
     buildMaxHeap();
   }
 
+  private int parent(int pos) {
+    return (pos-1)/2;
+  }
+
+  private int leftChild(int pos) {
+    return (2 * pos) + 1;
+  }
+
+  private int rightChild(int pos) {
+    return (2 * pos) + 2;
+  }
+
+  private void swap(int fpos, int spos) {
+    Task temp;
+    temp = tasks[fpos];
+    tasks[fpos] = tasks[spos];
+    tasks[spos] = temp;
+  }
+
   private void heapify(int i){
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
+    int largest = parent(i);
+    int left = leftChild(i);
+    int right = rightChild(i);
 
     if(left<size && this.tasks[left].compareTo(this.tasks[largest]) < 0){
       largest = left;
@@ -30,10 +50,8 @@ public class MaxHeap {
     }
 
     if(largest != i){
-      Task swap = tasks[i];
-      tasks[i] = tasks[largest];
-      tasks[largest] = swap;
-
+      swap(i, largest);
+      
       heapify(largest);
     }
   }
@@ -53,23 +71,26 @@ public class MaxHeap {
     return max;
   }
 
-  public void insert(int x) throws Exception{ //fix or rewrite insert so line 63 works
-    if(size == x){
-      throw new Exception("heap overflow");
+  public void insert(Task x) throws Exception{
+    tasks[size] = x;
+
+    int current = size;
+    while(tasks[current].compareTo(tasks[parent(current)]) > 0) {
+      swap(current, parent(current));
+      current = parent(current);
     }
-    size = size+1;
-    //k = x.key;
-    //x.key = -infinity//Integer.MIN_VALUE, for example
-    tasks[size-1] = x;
   }
 
-  public int increaseKey(int position, Task tasks) throws Exception{ //fix the getPriority as well as compareTo
+  public void increaseKey(int position, Task tasks) throws Exception{
       if(this.tasks[position].compareTo(tasks) < 0){
         throw new Exception("new key must be larger than current key");
       }
-      tasks.setPriority(this.tasks[position].getPriority());
-      int i = 
-      while()
+      this.tasks[position].setPriority(tasks.getPriority());
+      int i = position;
+      while(i > 0 && (this.tasks[parent(i)].compareTo(this.tasks[i])) < 0){
+        swap(i, parent(i));
+        i = parent(i);
+      }
   }
 
   public boolean isEmpty(){
