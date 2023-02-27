@@ -67,8 +67,8 @@ public class Task implements TaskInterface, Comparable<Task> {
     this.description = description;
   }
 
-  public void toString(){
-    //print value in a bit
+  public String toString(){
+    return "Priority: " + getPriority() + "\nTime: " + getTime() + "\nSimulation Time: " + getSimTime() + "\nTask Type: " + getTaskType() + "\nDescription: " + getDescription(); 
   }
   @Override
   public String getTaskDescription() {

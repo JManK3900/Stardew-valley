@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class MaxHeap {
   
   protected Task[] tasks;
@@ -72,6 +74,10 @@ public class MaxHeap {
   }
 
   public void insert(Task x) throws Exception{
+    if(size >= tasks.length){
+      Task[] temp = Arrays.copyOf(tasks,size*2);
+      tasks = temp;
+    }
     tasks[size] = x;
 
     int current = size;
